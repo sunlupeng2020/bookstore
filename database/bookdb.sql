@@ -40,3 +40,19 @@ INSERT INTO `booktable` (`bookid`, `bookname`, `bookauthor`, `booktype`, `bookpr
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+CREATE TABLE  IF NOT EXISTS `users` (
+  `userid` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(50) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `password` varchar(50) DEFAULT NULL,
+  `nick` varchar(50) DEFAULT NULL,
+  `role` varchar(50) DEFAULT NULL,
+  `remainingSum` decimal(10,2) DEFAULT NULL,
+  PRIMARY KEY (`userid`),
+  UNIQUE KEY `username` (`username`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=gb2312;
+
+/*!原始用户数据 */;
+INSERT INTO `users`(`userid`, `username`, `email`, `password`, `nick`,`role`,`remainingSum`) VALUES
+  (1,'admin','admin@163.com','1','admin','admin',100000.0),
+  (2,'aa','aa@163.com','aa','阿大','user',9999.99);
