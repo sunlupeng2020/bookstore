@@ -2,47 +2,51 @@
 <!DOCTYPE html>
 <?php
 if(isset($_POST['username'])){
-    mysqli_query($conn,"set names 'utf8'");//设置字符编码格式
-    $Result=false;//假设插入不成功
-    if(isset($_POST['username'])){
-        $username = $_POST['username'];
-	$password=$_POST['password'];
-        $selectSQL=sprintf("select * from users where `username`='%s'",$username);
-        $ResultUser=mysqli_query($conn,$selectSQL) or die(mysqli_error($conn));
-        $count= mysqli_num_rows($ResultUser);
-        if($count>0)
-        {
-            echo "<script>alert('用户名已存在！请使用其它用户名！');</script>";
-        }
-        else
-        {
-            $insertSQL="insert into `users`(username,password) values('$username','$password')";
-            $Result=mysqli_query($conn,$insertSQL) or die(mysqli_error($conn));
-            if($Result){
-                //echo "<script>alert('注册成功！');</script>";
-                header("Location:login.php");
+//    if(checkusername()){
+        mysqli_query($conn,"set names 'utf8'");//设置字符编码格式
+        $Result=false;//假设插入不成功
+        if(isset($_POST['username'])){
+            $username = $_POST['username'];
+            $password=$_POST['password'];
+            $selectSQL=sprintf("select * from users where `username`='%s'",$username);
+            $ResultUser=mysqli_query($conn,$selectSQL) or die(mysqli_error($conn));
+            $count= mysqli_num_rows($ResultUser);
+            if($count>0)
+            {
+                echo "<script>alert('用户名已存在！请使用其它用户名！');</script>";
             }
             else
             {
-                 echo "<script>alert('注册失败！');</script>";
-            }    
+                $insertSQL="insert into `users`(username,password) values('$username','$password')";
+                $Result=mysqli_query($conn,$insertSQL) or die(mysqli_error($conn));
+                if($Result){
+                    //echo "<script>alert('注册成功！');</script>";
+                    header("Location:login.php");
+                }
+                else
+                {
+                     echo "<script>alert('注册失败！');</script>";
+                }    
+            }
         }
-    }
+//    }else{
+//         echo "<script>alert('用户名格式错误！正确格式：以字母开头，6-20个字符。');</script>";
+//    }
 }
 
-
-function checkusername()
-{
-    $username=$_POST['username'];
-    $reg="/^[a-zA-Z][a-zA-Z0-9_]{5,19}$/";
-    $unreg=preg_match($reg,$username);
-    if(preg_match($reg,$username)==0){
-        echo("<script>alert('用户名格式不对！');</script>"); 
-          //echo("<meta http-equiv='refresh' content='1;url=register.php'>");
-        return false;
-    }
-    return true;
-}
+//
+//function checkusername()
+//{
+//    $username=$_POST['username'];
+//    $reg="/^[a-zA-Z][a-zA-Z0-9_]{5,19}$/";
+//    $unreg=preg_match($reg,$username);
+//    if(preg_match($reg,$username)==0){
+//        //echo("<script>alert('用户名格式不对！');</script>"); 
+//          //echo("<meta http-equiv='refresh' content='1;url=register.php'>");
+//        return false;
+//    }
+//    return true;
+//}
 /* 
  * 用户注册
  * To change this template file, choose Tools | Templates
@@ -54,16 +58,8 @@ function checkusername()
     用户名：<input name="username" type="text" size="30" id="username"/><br/>
     密码：<input name="password" type="text"size="30" id="password"/><br/>
     <input type="hidden" name="checked" id="checked" value="0"/>
-    <input type="submit" name="submit" value="提交"/>
-  
-</form>
-
-
-
-
-
-
-
+    <input type="submit" name="submit" value="提交" onclick="return check()"/>
+ </form>
 <script type="text/javascript">
     function check(){
         var msg="";
