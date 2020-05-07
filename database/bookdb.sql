@@ -52,7 +52,7 @@ CREATE TABLE  IF NOT EXISTS `users` (
   UNIQUE KEY `username` (`username`)
 ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=gb2312;
 
-/*!原始用户数据 */;
+--往用户表中插入两个用户信息
 INSERT INTO `users`(`userid`, `username`, `email`, `password`, `nick`,`role`,`remainingSum`) VALUES
   (1,'admin','admin@163.com','1','admin','admin',100000.0),
   (2,'aa','aa@163.com','aa','阿大','user',9999.99);
